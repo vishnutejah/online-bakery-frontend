@@ -664,6 +664,26 @@ video {
   margin-bottom: 0.75rem;
 }
 
+.ml-16 {
+  margin-left: 4rem;
+}
+
+.ml-48 {
+  margin-left: 12rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.ml-52 {
+  margin-left: 13rem;
+}
+
+.ml-64 {
+  margin-left: 16rem;
+}
+
 .flex {
   display: flex;
 }
@@ -1005,6 +1025,11 @@ video {
   line-height: 1.25rem;
 }
 
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -1063,4 +1088,8 @@ video {
 .filter {
   -webkit-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
           filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
 }

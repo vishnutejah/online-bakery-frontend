@@ -57,12 +57,12 @@ export const CartCard = () => {
               </p>
               <div className="ml-4 border-2 bg-gray-800 text-white font-semibold tracking-widest flex items-center">
                 <IconMinus
-                  className="h-6 w-4"
+                  className="h-6 w-4 hover:cursor-pointer"
                   onClick={() => handleRemove({ item })}
                 />
                 <span className="ml-1 mr-1">{count}</span>
                 <IconPlus
-                  className="h-6 w-4"
+                  className="h-6 w-4 hover:cursor-pointer"
                   onClick={() => handleAdd({ item })}
                 />
               </div>
@@ -83,22 +83,30 @@ export const CartCard = () => {
 
   return (
     <>
-      <div className="flex justify-between rounded-md">
-        <div className="w-5/6">{cartItemElements}</div>
-        {cartItems.length > 0 && (
-          <div className=" pt-4 border-2 rounded-md w-2/3 h-32 border-black shadow-md">
-            <p className="font-bold font-serif text-center pr-2">
-              Cart total : &#8377; {cartTotal}
-            </p>
-            <button
-              onClick={handleOrder}
-              className="bg-orange-500 text-white tracking-wider font-serif uppercase mt-10 border-2 rounded-lg p-2"
-            >
-              order
-            </button>
-          </div>
-        )}
-      </div>
+      {cartItemElements?.length > 0 ? (
+        <div className="flex justify-between rounded-md">
+          <div className="w-5/6">{cartItemElements}</div>
+          {cartItems.length > 0 && (
+            <div className=" pt-4 border-2 rounded-md w-2/3 h-32 border-black shadow-md">
+              <p className="font-bold font-serif text-center pr-2">
+                Cart total : &#8377; {cartTotal}
+              </p>
+              <button
+                onClick={handleOrder}
+                className="bg-orange-500 text-white tracking-wider font-serif uppercase mt-10 border-2 rounded-lg p-2"
+              >
+                order
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="bg-gray-200 h-screen p-4 ml-64 mt-8">
+          <h1 className="font-serif uppercase tracking-widest font-bold text-3xl">
+            Cart empty !!
+          </h1>
+        </div>
+      )}
     </>
   );
 };
