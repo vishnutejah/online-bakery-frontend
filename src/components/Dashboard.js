@@ -93,7 +93,7 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="">
+    <div className="bg-gray-100">
       <div className="mb-4">
         <DatePicker
           className="border-2 border-gray-300 font-mono tracking-wider p-2 rounded-lg"
@@ -121,7 +121,12 @@ export const Dashboard = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="orders" stroke="#8884d8" />
+            <Line
+              type="monotone"
+              dataKey="orders"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
           </LineChart>
         </ResponsiveContainer>
         <div className="flex bt-4">

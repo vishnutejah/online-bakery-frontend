@@ -32,7 +32,7 @@ export const Main = () => {
       setFilteredItems(items);
     } else {
       const updatedFilteredItems = itemsCopy.filter((item) =>
-        item.displayName.toLowerCase().includes(searchVal)
+        item.displayName.toLowerCase().includes(searchVal.toLowerCase())
       );
       setFilteredItems(updatedFilteredItems);
     }

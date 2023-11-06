@@ -11,8 +11,8 @@ export const Header = () => {
   const cartItemsCount = cartItems.length;
   return (
     <div>
-      <h1 className="pt-2 text-center text-black tracking-wider capitalize font-bold text-5xl font-serif">
-        {/* Welcome to Chezuba bakery */}
+      <h1 className="pt-2 text-center text-black tracking-wider capitalize font-bold text-5xl font-mono">
+        Welcome to Chezuba bakery
       </h1>
       <div className="flex justify-between">
         <div className="flex">
