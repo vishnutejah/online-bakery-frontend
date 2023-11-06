@@ -2,24 +2,49 @@ import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   Bar,
   BarChart,
   CartesianGrid,
   Legend,
+  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
+  LineChart,
 } from "recharts";
 
 export const Dashboard = () => {
+  const currentDate = new Date();
+  const startOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  );
   const [orderData, setOrderData] = useState([]);
   const [orderDataByType, setOrderDataByType] = useState([]);
   const [orderDataByState, setOrderDataByState] = useState([]);
+  const [orderDataByMonth, setOrderDataByMonth] = useState([]);
+  const [orderDataByWeek, setOrderDataByWeek] = useState([]);
   const itemTypes = ["Cake", "Cookies", "Muffins"];
   const orderState = ["Created", "Shipped", "Delivered", "Cancelled"];
-  const [startDate, setStartDate] = useState();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const [startDate, setStartDate] = useState(startOfMonth);
   const [endDate, setEndDate] = useState();
 
   useEffect(() => {
@@ -31,11 +56,13 @@ export const Dashboard = () => {
   useEffect(() => {
     const updatedOrderDataByType = [];
     const updatedOrderDataByState = [];
+    const updatedOrderDataByMonth = [];
+
     itemTypes.forEach((type) => {
       const filteredDataCount = orderData.filter(
         (order) => order.itemType === type
       ).length;
-      updatedOrderDataByType.push({ name: type, count: filteredDataCount });
+      updatedOrderDataByType.push({ name: type, Orders: filteredDataCount });
     });
     setOrderDataByType(updatedOrderDataByType);
 
@@ -43,9 +70,17 @@ export const Dashboard = () => {
       const filteredDataCount = orderData.filter(
         (order) => order.orderState === state
       ).length;
-      updatedOrderDataByState.push({ name: state, count: filteredDataCount });
+      updatedOrderDataByState.push({ name: state, Orders: filteredDataCount });
     });
     setOrderDataByState(updatedOrderDataByState);
+
+    months.forEach((month) => {
+      let monthOrders = orderData.filter(
+        (order) => moment(order.createdTime).format("MMMM") == month
+      ).length;
+      updatedOrderDataByMonth.push({ month: month, orders: monthOrders });
+    });
+    setOrderDataByMonth(updatedOrderDataByMonth);
   }, [orderData]);
 
   const handleDateChange = (selectedDate) => {
@@ -58,30 +93,65 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="bg-black pt-4 h-screen">
-      <div className="bg-green-400 p-2 mb-3">
+    <div className="">
+      <div className="mb-4">
         <DatePicker
-          className="bg-blue-400"
+          className="border-2 border-gray-300 font-mono tracking-wider p-2 rounded-lg"
           selected={startDate}
           onChange={handleDateChange}
-          dateFormat="MMM yyyy"
+          dateFormat="MMMM yyyy"
           showMonthYearPicker
         />
       </div>
-      <div>
-        <ResponsiveContainer width="40%" height={300}>
-          <BarChart
-            data={orderDataByState}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      <div className="h-screen">
+        <ResponsiveContainer width="100%" height="50%">
+          <LineChart
+            width={500}
+            height={300}
+            data={orderDataByMonth}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" fill="#8884d8" />
-          </BarChart>
+            <Line type="monotone" dataKey="orders" stroke="#8884d8" />
+          </LineChart>
         </ResponsiveContainer>
+        <div className="flex bt-4">
+          <ResponsiveContainer width="50%" height={300}>
+            <BarChart
+              data={orderDataByState}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Orders" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="50%" height={300}>
+            <BarChart
+              data={orderDataByType}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Orders" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
